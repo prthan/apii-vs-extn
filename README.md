@@ -18,5 +18,5 @@ The developer can organize their test scripts for their end points as files in t
 
 ![editor]
 
-[new-command]: res/new-command.png
-[editor]: res/editor.png
+[new-command]: https://raw.githubusercontent.com/prthan/apii-vsc-extn/main/res/new-command.png
+[editor]: https://raw.githubusercontent.com/prthan/apii-vsc-extn/main/res/editor.png

@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InspectionPanel = void 0;
 const EventEmitter = require("events");
-const Send_1 = require("./Send");
+const Fetch_1 = require("./Fetch");
 class InspectionPanel extends EventEmitter {
     constructor(panel, inspection) {
         super();
@@ -64,7 +64,6 @@ class InspectionPanel extends EventEmitter {
         return new Promise(impl);
     }
     onWebViewInit(msg) {
-        console.log("init message from webview");
         this.loadInspection(this._inspection);
     }
     onUpdate(msg) {
@@ -72,8 +71,7 @@ class InspectionPanel extends EventEmitter {
     }
     onSend(data, reply) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("onsend", data);
-            data.inspection = yield Send_1.Send.exec(data.inspection);
+            data.inspection = yield Fetch_1.Fetch.exec(data.inspection);
             reply(data);
         });
     }

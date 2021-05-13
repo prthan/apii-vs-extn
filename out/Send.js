@@ -29,9 +29,7 @@ class Send {
                 options.data = inspection.request.content;
             let outcome = { startTime: process.hrtime() };
             axios_1.default(options)
-                .then((res) => {
-                outcome.res = res;
-            })
+                .then((res) => outcome.res = res)
                 .catch((err) => {
                 if (err.response)
                     outcome.res = err.response;
@@ -56,6 +54,36 @@ class Send {
         inspection.response.content = res.data;
         inspection.response.headers = [];
         Object.keys(res.headers).forEach((header) => inspection.response.headers.push({ header: header, value: res.headers[header] }));
+    }
+    static getURL(url) {
+        let impl = ($res, $rej) => __awaiter(this, void 0, void 0, function* () {
+            let options = { method: "GET", url: url };
+            let outcome = {};
+            axios_1.default(options)
+                .then((res) => outcome.res = res)
+                .catch((err) => {
+                if (err.response)
+                    outcome.res = err.response;
+                else
+                    outcome.err = err;
+            })
+                .finally(() => {
+                let res = {};
+                if (outcome.res) {
+                    if (outcome.res.status == 200) {
+                        res.status = { code: outcome.res.status, text: outcome.res.statusText };
+                        res.content = outcome.res.data;
+                    }
+                    else
+                        res.error = { code: outcome.res.status, message: outcome.res.statusText, details: outcome.res.data };
+                }
+                if (outcome.err) {
+                    res.error = { code: -1, message: outcome.err.message };
+                }
+                $res(res);
+            });
+        });
+        return new Promise(impl);
     }
 }
 exports.Send = Send;

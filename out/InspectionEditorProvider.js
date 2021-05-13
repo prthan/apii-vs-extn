@@ -23,19 +23,10 @@ class InspectionEditorProvider {
         this.changeEventEmitter = new vscode.EventEmitter();
         this.onDidChange = this.changeEventEmitter.event;
     }
-    static registerNewCommand() {
-        vscode.commands.registerCommand('apii.inspection.new', () => {
-            const workspaceFolders = vscode.workspace.workspaceFolders;
-            if (!workspaceFolders) {
-                vscode.window.showErrorMessage("Open a workspace");
-                return;
-            }
-            const uri = vscode.Uri.joinPath(workspaceFolders[0].uri, `inspection-${InspectionEditorProvider.editorId++}.apii`).with({ scheme: 'untitled' });
-            vscode.commands.executeCommand('vscode.openWith', uri, InspectionEditorProvider.viewType);
-        });
+    static getNextEditorNumber() {
+        return this.editorId++;
     }
     static register(context) {
-        InspectionEditorProvider.registerNewCommand();
         let provider = new InspectionEditorProvider(context);
         let options = {
             webviewOptions: { retainContextWhenHidden: true },
@@ -48,7 +39,6 @@ class InspectionEditorProvider {
         return __awaiter(this, void 0, void 0, function* () {
             let panel = [...this.inspectionColl.get(document.uri)][0];
             let inspection = yield panel.getInspection();
-            console.log("save as document", inspection);
             document.update(inspection);
             return document.saveAs(destination, cancellation);
         });
@@ -57,7 +47,6 @@ class InspectionEditorProvider {
         return __awaiter(this, void 0, void 0, function* () {
             let panel = [...this.inspectionColl.get(document.uri)][0];
             let inspection = yield panel.getInspection();
-            console.log("save document", inspection);
             document.update(inspection);
             return document.save(cancellation);
         });
@@ -76,7 +65,6 @@ class InspectionEditorProvider {
             let inspectionPanel = new InspectionPanel_1.InspectionPanel(webviewPanel, document.inspection);
             this.inspectionColl.add(document.uri, inspectionPanel);
             inspectionPanel.on("update", (data) => {
-                console.log("updated inspection", data);
                 document.update(data.inspection);
                 if (document.uri.scheme != "untitled")
                     this.documentChangeEventEmitter.fire({ document: document });

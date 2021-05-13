@@ -68,14 +68,12 @@ export class InspectionDocument implements vscode.CustomDocument
 
   async save(cancellation: vscode.CancellationToken): Promise<void> 
 	{
-		console.log("save....");
 		this._documentData=Buffer.from(JSON.stringify(this._inspection));
 		await vscode.workspace.fs.writeFile(this._uri, this._documentData);
 	}
 
 	async saveAs(targetResource: vscode.Uri, cancellation: vscode.CancellationToken): Promise<void> 
 	{
-		console.log("save as....", this._inspection);
 		if (cancellation.isCancellationRequested) return;
 		await vscode.workspace.fs.writeFile(targetResource, Buffer.from(JSON.stringify(this._inspection)));
 	}

@@ -1,7 +1,7 @@
 import EventEmitter = require('events');
 import * as vscode from 'vscode';
 import { Inspection } from './Inspection';
-import {Send} from './Send';
+import {Fetch} from './Fetch';
 
 export class InspectionPanel extends EventEmitter
 {
@@ -71,7 +71,6 @@ export class InspectionPanel extends EventEmitter
 
   public onWebViewInit(msg :any)
   {
-    console.log("init message from webview");
     this.loadInspection(this._inspection);
   }
 
@@ -82,8 +81,7 @@ export class InspectionPanel extends EventEmitter
 
   private async onSend(data :any, reply :any)
   {
-    console.log("onsend", data);
-    data.inspection = await Send.exec(data.inspection);
+    data.inspection = await Fetch.exec(data.inspection);
     reply(data);
   }
 

@@ -2,8 +2,8 @@
 	"name": "apii",
 	"displayName": "apii",
 	"description": "VS Code Extension for testing APIs",
-	"icon": "html/res/images/logo/pack/icon-128x128.png",
-	"version": "0.0.1",
+	"icon": "res/icon-128x128.png",
+	"version": "0.0.2",
 	"publisher": "prthan",
 	"repository": "https://github.com/prthan/apii-vsc-extn",
 	"engines": {
@@ -14,6 +14,7 @@
 	],
 	"activationEvents": [
 		"onCommand:apii.inspection.new",
+		"onCommand:apii.inspection.from-wsdl",
 		"onCustomEditor:apii.inspection"
 	],
 	"main": "./out/extension.js",
@@ -22,6 +23,10 @@
 			{
 				"command": "apii.inspection.new",
 				"title": "APIi: New Inspection"
+			},
+			{
+				"command": "apii.inspection.from-wsdl",
+				"title": "APIi: New Inspection from WSDL"
 			}
 		],
 		"customEditors": [
@@ -58,6 +63,7 @@
 		"vscode-test": "^1.5.0"
 	},
 	"dependencies": {
-		"axios": "^0.21.1"
+		"axios": "^0.21.1",
+		"sax": "^1.2.4"
 	}
 }

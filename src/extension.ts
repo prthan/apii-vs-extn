@@ -1,9 +1,11 @@
 import * as vscode from 'vscode';
+import { Commands } from './Commands';
 import {InspectionEditorProvider} from './InspectionEditorProvider';
 
 export function activate(context: vscode.ExtensionContext) 
 {
-	console.log("registering editor");
+	vscode.commands.registerCommand('apii.inspection.new', Commands.newInspectionCommand);    
+	vscode.commands.registerCommand('apii.inspection.from-wsdl', Commands.newInspectionFromWSDLCommand);
 	context.subscriptions.push(InspectionEditorProvider.register(context));	
 }
 

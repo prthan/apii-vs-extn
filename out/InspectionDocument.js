@@ -47,14 +47,12 @@ class InspectionDocument {
     }
     save(cancellation) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("save....");
             this._documentData = Buffer.from(JSON.stringify(this._inspection));
             yield vscode.workspace.fs.writeFile(this._uri, this._documentData);
         });
     }
     saveAs(targetResource, cancellation) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("save as....", this._inspection);
             if (cancellation.isCancellationRequested)
                 return;
             yield vscode.workspace.fs.writeFile(targetResource, Buffer.from(JSON.stringify(this._inspection)));
